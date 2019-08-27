@@ -1,0 +1,126 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'groovy'
+
+
+repositories {
+    mavenCentral()
+    google()
+
+    maven {// 添加Maven的本地依赖
+        url uri('./repository')
+    }
+}
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.example.pluginproject"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+//    compile localGroovy()
+//    implementation 'com.android.tools.build:transform-api:1.5.0'
+//    implementation 'commons-io:commons-io:2.5'
+
+}
+
+//工程配置 ，需要
+
+// 1. 创建plugin实现类
+
+//apply plugin: fun.wanke.plugin.MyPlugin
+//
+////apply plugin: 'fun.wanke.plugin'
+//
+//address {
+//    name = "hjaha"
+//}
+
+
+/**
+ * 分别定义Extension1 和 Extension2 类，申明参数传递变量
+ */
+//class Extension1 {
+//    String testVariable1 = null
+//}
+//
+//class Extension2 {
+//    String testVariable2 = null
+//}
+///**
+// * 插件入口类
+// */
+//class TestPlugin implements Plugin<Project> {
+//    @Override
+//    void apply(Project project) {
+//        //利用Extension创建e1 e2 闭包，用于接受外部传递的参数值
+//        project.extensions.create('e1', Extension1.class)
+//        project.extensions.create('e2', Extension2.class)
+//
+//        //创建readExtension task 执行该task 进行参数值的读取以及自定义逻辑...
+//        project.task('read') {
+//
+//            println 'e1 = ' + project['e1'].testVariable1
+//            println 'e2 = ' + project['e2'].testVariable2
+//        }
+//    }
+//}
+///**
+// * 依赖我们刚刚自定义的TestPlugin，注意 使用e1 {} || e2{} 一定要放在apply plugin:TestPlugin 后面, 因为 app plugin:TestPlugin
+// * 会执行 Plugin的apply 方法，进而利用Extension 将e1 、e2 和 Extension1 Extension2 绑定，编译器才不会报错
+// */
+//apply plugin: TestPlugin
+//
+//e1 {
+//    testVariable1 = 'testVariable1'
+//}
+//
+//e2 {
+//    testVariable2 = 'testVariable2'
+//}
+
+
+//apply plugin: fun.wanke.plugin.MyPlugin
+
+
+//address {
+//    name "zhangsan lisi "
+//}
+
+//task helloJd(type : MyTask) {
+//    doLast {
+//        println "action 2 ......  "
+//    }
+//}
+
+
+apply plugin: 'fun.wanke.plugin'
+////
+//task Hell(type : fun.wanke.plugin.JdJarTask) {
+//
+//}
+
+
+
+
+
+
+

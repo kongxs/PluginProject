@@ -12,6 +12,7 @@ public class Act extends Activity {
 
         System.out.println("--------------  ");
         new People();
+        new People();
         System.out.println("--------------  ");
 
 

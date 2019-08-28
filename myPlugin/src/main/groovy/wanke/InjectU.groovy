@@ -9,7 +9,7 @@ class InjectU {
 
     static ClassPool pool = ClassPool.getDefault()
 
-    static String injectStr = "System.out.println(\"I Love android\" ); "
+    static String injectStr = "System.out.println(\"I Love android-----\" ); "
 
 
     /**

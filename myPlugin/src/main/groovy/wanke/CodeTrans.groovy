@@ -20,6 +20,7 @@ class CodeTrans extends Transform {
 
     CodeTrans(Project project) {
         this.project = project
+        println "new transform ----- "
     }
 
     @Override
@@ -44,10 +45,14 @@ class CodeTrans extends Transform {
 
     @Override
     void transform(Context context, Collection<TransformInput> inputs, Collection<TransformInput> referencedInputs, TransformOutputProvider outputProvider, boolean isIncremental) throws IOException, TransformException, InterruptedException {
-        super.transform(context, inputs, referencedInputs, outputProvider, isIncremental)
 
+//        super.transform(context, inputs, referencedInputs, outputProvider, isIncremental)
 
-        println "transform method is invoked"
+        ExtParams params = project.extParams
+
+        println " params.logEnable is ${ params.logEnable }"
+
+        println "transform method is invoked  ====== --------------- "
 //        System.out.println("=======================================doPathTransform{ context=${context}, inputs=${inputs}, referencedInputs=${referencedInputs}, outputProvider=${outputProvider}, isIncremental=${isIncremental}")
 
 
@@ -90,9 +95,7 @@ class CodeTrans extends Transform {
                 FileUtils.copyFile(jarInput.file,dest)
 
             }
-
-
-
         }
+
     }
 }

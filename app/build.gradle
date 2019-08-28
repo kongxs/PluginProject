@@ -118,6 +118,9 @@ apply plugin: 'fun.wanke.plugin'
 //
 //}
 
+extParams {
+    logEnable true
+}
 
 
 

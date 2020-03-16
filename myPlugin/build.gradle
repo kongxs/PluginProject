@@ -19,7 +19,7 @@ repositories {
 }
 
 group = 'fun.wanke.plugin'
-version = '1.2'
+version = '1.5'
 
 uploadArchives {
     repositories {
@@ -28,6 +28,8 @@ uploadArchives {
         }
     }
 }
+
+
 
 
 

@@ -8,7 +8,8 @@ class MyPlugin implements Plugin<Project> {
     void apply(Project project) {
         println "hello this my plugin in standalone ------- "
 
-//        JdJarTask task = new JdJarTask();
+
+        project.tasks.create("jdJar",JdJarTask.class)
 
         project.extensions.create("extParams",ExtParams)
 

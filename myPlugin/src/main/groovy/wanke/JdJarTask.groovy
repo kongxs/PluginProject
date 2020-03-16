@@ -6,6 +6,10 @@ import org.gradle.api.tasks.TaskAction
 class JdJarTask extends DefaultTask {
 
 
+    public JdJarTask() {
+        group='versioning'
+        description='Makes project a release version.'
+    }
 
     @TaskAction
     void action( ) {

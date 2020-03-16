@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'groovy'
+//apply plugin: 'fun.wanke.plugin'
 
 
 repositories {
@@ -113,15 +113,13 @@ dependencies {
 
 
 apply plugin: 'fun.wanke.plugin'
-////
 //task Hell(type : fun.wanke.plugin.JdJarTask) {
 //
 //}
 
-extParams {
-    logEnable true
-}
-
+//extParams {
+//    logEnable true
+//}
 
 
 

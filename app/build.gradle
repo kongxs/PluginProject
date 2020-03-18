@@ -11,8 +11,10 @@ repositories {
     }
 }
 
+def mCompileSdkVersion = 28
+
 android {
-    compileSdkVersion 28
+    compileSdkVersion this.compilesdkV
     defaultConfig {
         applicationId "com.example.pluginproject"
         minSdkVersion 15
@@ -122,6 +124,18 @@ apply plugin: 'fun.wanke.plugin'
 //}
 
 
+//配置阶段开始
+this.beforeEvaluate{
+    print"配置阶段开始"
+}
 
+//配置阶段结束
+this.afterEvaluate{
+    print"配置阶段结束"
+}
 
+//gradle执行结束
+this.gradle.buildFinished{
+    print"gradle 执行结束 "
+}
 

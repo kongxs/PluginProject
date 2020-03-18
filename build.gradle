@@ -29,3 +29,59 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+
+ext {
+    compilesdkV = 28
+}
+
+
+//
+//this.rootProject.getAllprojects().eachWithIndex {
+//    println("name: ${it.name}")
+//}
+//
+//this.beforeEvaluate {
+//    println("beforeEvaluate")
+//}
+//
+//this.afterEvaluate {
+//    println("afterEvaluate")
+//}
+//
+this.gradle.buildFinished {
+    println("buuild finish --------   ")
+}
+//
+//
+//
+//this.allprojects.each {
+//
+//    it.group = 'com.test.group'
+//}
+//
+//
+//
+this.project("myPlugin") {
+        println "project group : ${it.group}"
+//        project.configurations.properties.each {println(it)}
+
+}
+//
+//this.subprojects {
+//        if(it.plugins.hasPlugin("com.android.library")) {
+//            println("子project ")
+//        }
+//}
+//
+//
+//
+//ext {
+//    compile_versioin = 29
+//    android_x_core = "androidx.core:core-ktx:1.2.0"
+//}
+
+subprojects {
+    apply from: '../maven.gradle'
+}

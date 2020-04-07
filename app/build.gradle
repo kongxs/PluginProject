@@ -114,7 +114,7 @@ dependencies {
 //}
 
 
-apply plugin: 'fun.wanke.plugin'
+//apply plugin: 'fun.wanke.plugin'
 //task Hell(type : fun.wanke.plugin.JdJarTask) {
 //
 //}

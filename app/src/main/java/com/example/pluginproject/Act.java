@@ -1,20 +1,19 @@
 package com.example.pluginproject;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.os.Environment;
+import android.view.View;
 
-import java.util.List;
+import java.io.File;
 
-public class Act extends Activity {
+public class Act extends BaseAct {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.layout_act);
 
         System.out.println("--------------  ");
         new People();
@@ -22,37 +21,43 @@ public class Act extends Activity {
         System.out.println("--------------  ");
 
 
-        getAllApps();
+//        getAllApps()
+//        launch("cn.samsclub.app");
 
 
-        launch("cn.samsclub.app");
 
-    }
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SkinManager.getInstance().load(Environment.getExternalStorageDirectory()
+                        + File.separator + "red.skin", new SkinManager.OnSkinLoadInterface() {
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onFinish(boolean success) {
+
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.deef).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SkinManager.getInstance().restoreDefault();
+            }
+        });
 
 
-    private void getAllApps() {
-
-
-        PackageManager manager = getPackageManager();
-
-        List<ApplicationInfo> installedApplications = manager.getInstalledApplications(0);
-
-        for (ApplicationInfo installedApplication : installedApplications) {
-            System.out.println("installedApplication = " + installedApplication.packageName);
-        }
-
-    }
-
-    private void launch(String packagename) {
-        Intent intent = getPackageManager().getLaunchIntentForPackage(packagename);
-        // 这里如果intent为空，就说名没有安装要跳转的应用嘛
-        if (intent != null) {
-            // 这里跟Activity传递参数一样的嘛，不要担心怎么传递参数，还有接收参数也是跟Activity和Activity传参数一样
-            Toast.makeText(getApplicationContext(), packagename + " , 已安装", Toast.LENGTH_LONG).show();
-        } else {
-            // 没有安装要跳转的app应用，提醒一下
-            Toast.makeText(getApplicationContext(), "哟，赶紧下载安装这个APP吧", Toast.LENGTH_LONG).show();
-        }
+        findViewById(R.id.tonext).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Act.this,ActNext.class));
+            }
+        });
     }
 
 }

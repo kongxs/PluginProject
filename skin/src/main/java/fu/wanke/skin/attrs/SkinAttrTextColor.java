@@ -1,9 +1,9 @@
-package com.example.pluginproject.attrs;
+package fu.wanke.skin.attrs;
 
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.pluginproject.SkinManager;
+import fu.wanke.skin.SkinManager;
 
 public class SkinAttrTextColor extends SkinAttr{
 

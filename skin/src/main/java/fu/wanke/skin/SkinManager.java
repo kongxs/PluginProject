@@ -1,4 +1,4 @@
-package com.example.pluginproject;
+package fu.wanke.skin;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -7,7 +7,7 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 
-import com.example.pluginproject.attrs.SkinAttr;
+import fu.wanke.skin.attrs.SkinAttr;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -198,12 +198,12 @@ public class SkinManager {
         return mSkinPackageName;
     }
 
-    interface OnSkinLoadInterface {
+    public interface OnSkinLoadInterface {
         void onStart();
         void onFinish(boolean success);
     }
 
-    interface SkinUpdater{
+    public interface SkinUpdater{
 
         void apply();
     }

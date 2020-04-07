@@ -1,8 +1,8 @@
-package com.example.pluginproject;
+package fu.wanke.skin;
 
 import android.view.View;
 
-import com.example.pluginproject.attrs.SkinAttr;
+import fu.wanke.skin.attrs.SkinAttr;
 
 import java.util.List;
 

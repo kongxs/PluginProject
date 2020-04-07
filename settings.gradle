@@ -1,2 +1,2 @@
-include ':app', ':myPlugin', ':skin_app'
+include ':app', ':myPlugin', ':skin_app', ':skin'
 //include ':buildSrc'

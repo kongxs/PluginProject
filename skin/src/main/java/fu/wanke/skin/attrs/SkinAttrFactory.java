@@ -1,4 +1,4 @@
-package com.example.pluginproject.attrs;
+package fu.wanke.skin.attrs;
 
 import java.util.HashMap;
 import java.util.Map;

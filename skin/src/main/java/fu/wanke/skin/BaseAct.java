@@ -1,4 +1,4 @@
-package com.example.pluginproject;
+package fu.wanke.skin;
 
 import android.os.Bundle;
 import android.support.v4.view.LayoutInflaterCompat;

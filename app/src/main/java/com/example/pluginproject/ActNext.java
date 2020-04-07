@@ -1,10 +1,8 @@
 package com.example.pluginproject;
 
 import android.os.Bundle;
-import android.os.Environment;
-import android.view.View;
 
-import java.io.File;
+import fu.wanke.skin.BaseAct;
 
 public class ActNext extends BaseAct {
 

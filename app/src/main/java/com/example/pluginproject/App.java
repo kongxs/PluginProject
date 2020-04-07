@@ -3,6 +3,8 @@ package com.example.pluginproject;
 import android.app.Application;
 import android.content.Context;
 
+import fu.wanke.skin.SkinManager;
+
 public class App extends Application {
 
     @Override

@@ -7,6 +7,9 @@ import android.view.View;
 
 import java.io.File;
 
+import fu.wanke.skin.BaseAct;
+import fu.wanke.skin.SkinManager;
+
 public class Act extends BaseAct {
 
     @Override

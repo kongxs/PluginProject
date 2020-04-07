@@ -1,4 +1,4 @@
-package com.example.pluginproject;
+package fu.wanke.skin;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -8,8 +8,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.example.pluginproject.attrs.SkinAttr;
-import com.example.pluginproject.attrs.SkinAttrFactory;
+import fu.wanke.skin.attrs.SkinAttr;
+import fu.wanke.skin.attrs.SkinAttrFactory;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;

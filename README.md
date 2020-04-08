@@ -1,5 +1,13 @@
 # PluginProject
 
-自定义gradle plugin +  transform + javassist 的一个示例
+myPlugin: 自定义plugin，支持动态字节码插装
+
+skin：换肤
+
+skinAPP： 换肤壳App
+
+app： demo示例
+
+
 
 

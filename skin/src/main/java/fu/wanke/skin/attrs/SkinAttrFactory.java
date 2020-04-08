@@ -6,13 +6,12 @@ import java.util.Map;
 public class SkinAttrFactory {
 
 
-    public static final String TEXT_COLOR = "textColor";
 
 
     private static Map<String , Class<? extends SkinAttr>> maps = new HashMap<>();
 
     static {
-        maps.put(TEXT_COLOR , SkinAttrTextColor.class);
+        maps.put(SkinAttr.TEXT_COLOR , SkinAttrTextColor.class);
     }
 
 

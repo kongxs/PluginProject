@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.view.View;
 
 import fu.wanke.skin.attrs.SkinAttr;
 
@@ -206,6 +207,11 @@ public class SkinManager {
     public interface SkinUpdater{
 
         void apply();
+    }
+
+    public interface DynamicUpdater{
+
+        void applyDynamic(DynamicView dynamicView);
     }
 
 }

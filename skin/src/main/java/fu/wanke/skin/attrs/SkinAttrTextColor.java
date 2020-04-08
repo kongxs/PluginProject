@@ -10,7 +10,7 @@ public class SkinAttrTextColor extends SkinAttr{
     @Override
     public void apply(View view) {
 
-        if (SkinAttrFactory.TEXT_COLOR.equals(this.attrName)) {
+        if (TEXT_COLOR.equals(this.attrName)) {
 
             int color = SkinManager.getInstance().getColor(this);
 

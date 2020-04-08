@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 
 import java.lang.reflect.Field;
 
-public class BaseAct extends AppCompatActivity implements SkinManager.SkinUpdater {
+public class BaseAct extends AppCompatActivity implements
+        SkinManager.SkinUpdater
+        , SkinManager.DynamicUpdater {
 
 
     private SkinFactory factory;
@@ -56,5 +58,10 @@ public class BaseAct extends AppCompatActivity implements SkinManager.SkinUpdate
     @Override
     public void apply() {
         factory.apply();
+    }
+
+    @Override
+    public void applyDynamic(DynamicView dynamicView) {
+        factory.applyDynamic(dynamicView);
     }
 }

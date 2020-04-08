@@ -108,20 +108,28 @@ public class SkinFactory implements LayoutInflater.Factory2 {
         }
 
 
+        doIt(view, viewAttrs);
+    }
 
-        if(viewAttrs.size() > 0){
+    public void applyDynamic(DynamicView dynamicView) {
+        if (dynamicView == null) return;
+        doIt(dynamicView.getView(), dynamicView.getAttrs());
+    }
+
+    private void doIt(View view, List<SkinAttr> viewAttrs) {
+
+        if(viewAttrs.size() > 0) {
+
             SkinItem skinItem = new SkinItem();
             skinItem.view = view;
             skinItem.attrs = viewAttrs;
 
             mSkinItems.add(skinItem);
 
-            if(SkinManager.getInstance().isDoUpdate()){
+            if (SkinManager.getInstance().isDoUpdate()) {
                 skinItem.apply();
             }
         }
-
-
     }
 
     /**
@@ -196,7 +204,6 @@ public class SkinFactory implements LayoutInflater.Factory2 {
     public View onCreateView(@NonNull String s, @NonNull Context context, @NonNull AttributeSet attributeSet) {
         return null;
     }
-
 
 
     public void apply() {

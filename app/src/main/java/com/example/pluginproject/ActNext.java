@@ -1,11 +1,14 @@
 package com.example.pluginproject;
 
+import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import fu.wanke.skin.BaseAct;
 import fu.wanke.skin.DynamicView;
+import fu.wanke.skin.SkinManager;
 import fu.wanke.skin.attrs.SkinAttr;
 
 public class ActNext extends BaseAct {
@@ -25,7 +28,7 @@ public class ActNext extends BaseAct {
         View view = new TextView(this);
         ((TextView) view).setText("hello world");
 
-        setContentView(view);
+//        setContentView(view);
 
 
         applyDynamic(
@@ -33,6 +36,21 @@ public class ActNext extends BaseAct {
                         .addAttribute(
                     SkinAttr.newInstance(SkinAttr.ATTR_TEXT_COLOR , R.color.color_main_text)
         ).build());
+
+
+
+
+        XmlResourceParser layout = SkinManager.getInstance().getLayout("layout");
+
+        if (layout != null) {
+            View inflate = LayoutInflater.from(this).inflate(layout, null);
+
+            if (inflate != null) {
+                setContentView(inflate);
+            }
+        }
+
+
 
     }
 

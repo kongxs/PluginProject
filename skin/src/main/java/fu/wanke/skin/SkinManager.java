@@ -5,9 +5,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.view.View;
 
 import fu.wanke.skin.attrs.SkinAttr;
 
@@ -202,6 +202,16 @@ public class SkinManager {
         return trueDrawable;
     }
 
+
+    public XmlResourceParser getLayout(String layoutName) {
+        int identifier = mResources.getIdentifier(layoutName, "layout", mSkinPackageName);
+
+        if (identifier > 0) {
+           return mResources.getLayout(identifier);
+        }
+
+        return null;
+    }
 
 
     public Context getmContext() {

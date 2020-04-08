@@ -8,7 +8,9 @@ import fu.wanke.skin.SkinManager;
 public abstract class SkinAttr {
 
 
-    public static final String TEXT_COLOR = "textColor";
+    public static final String ATTR_TEXT_COLOR = "textColor";
+
+    public static final String ATTR_BACKGROUND = "background";
 
     /**
      *  <textview

@@ -11,7 +11,8 @@ public class SkinAttrFactory {
     private static Map<String , Class<? extends SkinAttr>> maps = new HashMap<>();
 
     static {
-        maps.put(SkinAttr.TEXT_COLOR , SkinAttrTextColor.class);
+        maps.put(SkinAttr.ATTR_TEXT_COLOR , SkinAttrTextColor.class);
+        maps.put(SkinAttr.ATTR_BACKGROUND , SkinAttrBackground.class);
     }
 
 

@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.View;
 
@@ -177,6 +178,30 @@ public class SkinManager {
 
         return trueColor;
     }
+
+    public Drawable getDrawable(SkinAttr attr , String type) {
+
+        // 从资源里获取 color ...
+        Drawable originDrawable = mContext.getResources().getDrawable(attr.getId());
+        if(mResources == null || isDefaultSkin){
+            return originDrawable;
+        }
+
+        String resName = mContext.getResources().getResourceEntryName(attr.getId());
+
+        int trueResId = mResources.getIdentifier(resName, type, mSkinPackageName);
+        Drawable trueDrawable = null;
+
+        try{
+            trueDrawable = mResources.getDrawable(trueResId);
+        }catch(Resources.NotFoundException e){
+            e.printStackTrace();
+            trueDrawable = originDrawable;
+        }
+
+        return trueDrawable;
+    }
+
 
 
     public Context getmContext() {

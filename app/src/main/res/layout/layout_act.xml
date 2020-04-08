@@ -14,6 +14,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <View
+        skin:enable="true"
+        android:background="@color/color_main_text"
+        android:layout_width="40dp"
+        android:layout_height="40dp"></View>
+
+    <View
+        skin:enable="true"
+        android:background="@drawable/img_bg"
+        android:layout_width="40dp"
+        android:layout_height="40dp"></View>
+
+
+    <ImageView
+        skin:enable="true"
+        android:src="@drawable/img_bg"
+        android:layout_width="40dp"
+        android:layout_height="40dp"></ImageView>
+
 
     <Button
         android:textColor="@color/color_main_text"

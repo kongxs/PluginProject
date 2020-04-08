@@ -31,7 +31,7 @@ public class ActNext extends BaseAct {
         applyDynamic(
                 new DynamicView.Builder(view)
                         .addAttribute(
-                    SkinAttr.newInstance(SkinAttr.TEXT_COLOR , R.color.color_main_text)
+                    SkinAttr.newInstance(SkinAttr.ATTR_TEXT_COLOR , R.color.color_main_text)
         ).build());
 
     }

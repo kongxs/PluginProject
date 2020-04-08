@@ -29,12 +29,15 @@ public class Act extends BaseAct {
 //        launch("cn.samsclub.app");
 
 
+        final String skinPath = Environment.getExternalStorageDirectory()
+                + File.separator + "red.skin";
+
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SkinManager.getInstance().load(Environment.getExternalStorageDirectory()
-                        + File.separator + "red.skin", new SkinManager.OnSkinLoadInterface() {
+
+                SkinManager.getInstance().load(skinPath, new SkinManager.OnSkinLoadInterface() {
                     @Override
                     public void onStart() {
 

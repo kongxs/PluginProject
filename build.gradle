@@ -85,3 +85,9 @@ this.project("myPlugin") {
 subprojects {
     apply from: '../maven.gradle'
 }
+
+//解压缩
+//exec {
+//    executable 'bash'
+//    args '-c', 'unzip '+originName+' -d tmpDir'
+//}

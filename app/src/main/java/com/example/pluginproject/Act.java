@@ -5,11 +5,21 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.example.pluginproject.retrofit.NetInterface;
+import com.example.pluginproject.retrofit.ReqResult;
 
 import java.io.File;
+import java.io.IOException;
 
 import fu.wanke.skin.BaseAct;
 import fu.wanke.skin.SkinManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Act extends BaseAct {
 
@@ -65,6 +75,42 @@ public class Act extends BaseAct {
                 startActivity(new Intent(Act.this,ActNext.class));
             }
         });
+
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .validateEagerly(true)
+                .baseUrl("https://www.mxnzp.com/") //设置网络请求的Url地址
+                .addConverterFactory(GsonConverterFactory.create()) //设置数据解析器
+                .build();
+
+        NetInterface service = retrofit.create(NetInterface.class);
+
+        Call<ReqResult> call = service.getCall();
+
+
+        call.enqueue(new Callback<ReqResult>() {
+            //请求成功时回调
+            @Override
+            public void onResponse(Call<ReqResult> call, Response<ReqResult> response) {
+                //请求处理,输出结果
+                Toast.makeText(Act.this, response.body().getMsg() , Toast.LENGTH_SHORT).show();
+            }
+            //请求失败时候的回调
+            @Override
+            public void onFailure(Call<ReqResult> call, Throwable throwable) {
+                System.out.println("连接失败");
+            }
+        });
+
+        //同步请求
+//        try {
+//            Response<ReqResult> response = call.execute();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
     }
 
 }

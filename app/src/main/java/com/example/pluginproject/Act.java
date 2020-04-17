@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.pluginproject.mvp.MvpExample;
 import com.example.pluginproject.retrofit.NetInterface;
 import com.example.pluginproject.retrofit.ReqResult;
 
 import java.io.File;
-import java.io.IOException;
 
 import fu.wanke.skin.BaseAct;
 import fu.wanke.skin.SkinManager;
@@ -73,6 +72,13 @@ public class Act extends BaseAct {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Act.this,ActNext.class));
+            }
+        });
+
+        findViewById(R.id.mvp).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Act.this, MvpExample.class));
             }
         });
 

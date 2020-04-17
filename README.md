@@ -8,6 +8,8 @@ skinAPP： 换肤壳App
 
 app： demo示例
 
+mvp : mvp 模式 
+
 
 
 

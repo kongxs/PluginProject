@@ -1,0 +1,3 @@
+val person = {
+    name:"zhangsan"
+};

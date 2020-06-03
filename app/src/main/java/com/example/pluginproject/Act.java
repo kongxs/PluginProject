@@ -12,6 +12,8 @@ import com.example.pluginproject.retrofit.ReqResult;
 
 import java.io.File;
 
+import fu.wanke.link.LinkManager;
+import fu.wanke.link.MessagePage;
 import fu.wanke.skin.BaseAct;
 import fu.wanke.skin.SkinManager;
 import retrofit2.Call;
@@ -82,6 +84,28 @@ public class Act extends BaseAct {
             }
         });
 
+        findViewById(R.id.link).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinkManager.getInstance().register();
+            }
+        });
+
+        findViewById(R.id.init).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinkManager.getInstance().connection();
+            }
+        });
+
+        findViewById(R.id.connectoin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinkManager.getInstance().sendMessage(MessagePage.mockConnection());
+            }
+        });
+
+
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -100,7 +124,7 @@ public class Act extends BaseAct {
             @Override
             public void onResponse(Call<ReqResult> call, Response<ReqResult> response) {
                 //请求处理,输出结果
-                Toast.makeText(Act.this, response.body().getMsg() , Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Act.this, response.body().getMsg() , Toast.LENGTH_SHORT).show();
             }
             //请求失败时候的回调
             @Override
@@ -115,7 +139,6 @@ public class Act extends BaseAct {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-
 
     }
 

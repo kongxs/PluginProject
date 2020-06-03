@@ -1,2 +1,3 @@
-include ':app', ':myPlugin', ':skin_app', ':skin', ':mvp'
+include ':app', ':myPlugin', ':skin_app', ':skin', ':mvp', ':link', ':lib'
+//include ':library'
 //include ':buildSrc'

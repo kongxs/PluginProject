@@ -1,5 +1,7 @@
 package com.example.pluginproject;
 
+import com.eclipsesource.v8.V8;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,5 +15,13 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
+    }
+
+
+    @Test
+    public void testv8() {
+
+
+
     }
 }

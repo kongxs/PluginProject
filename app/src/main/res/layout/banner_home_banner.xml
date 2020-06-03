@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_banner_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF0000FF">
+
+    <com.site.myapplication.banner.CarouselRelativeLayout
+        android:id="@+id/home_focus_pager_box"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFF00FF"
+        android:clipChildren="false"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.site.myapplication.banner.CarouselViewPager
+            android:id="@+id/home_focus_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp" />
+
+        <LinearLayout
+            android:id="@+id/home_focus_dot_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="4dp"
+            android:layout_alignBottom="@id/home_focus_pager"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" />
+
+    </com.site.myapplication.banner.CarouselRelativeLayout>
+</android.support.constraint.ConstraintLayout>

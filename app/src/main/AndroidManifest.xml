@@ -26,6 +26,7 @@
         </activity>
 
         <activity android:name=".ActNext"></activity>
+        <activity android:name=".V8Activity"></activity>
         <activity android:name=".mvp.MvpExample"></activity>
 
 

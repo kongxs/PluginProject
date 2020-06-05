@@ -62,8 +62,6 @@ dependencies {
 
     implementation 'com.eclipsesource.j2v8:j2v8:6.1.0'
 
-    implementation (name:"j2v8-6.1.0",ext:"aar")
-
 
 
 //    compile localGroovy()

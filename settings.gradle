@@ -1,3 +1,4 @@
 include ':app', ':myPlugin', ':skin_app', ':skin', ':mvp', ':link', ':lib'
 //include ':library'
 //include ':buildSrc'
+include ':opengl'

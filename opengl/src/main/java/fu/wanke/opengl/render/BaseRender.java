@@ -7,6 +7,7 @@ import android.opengl.GLSurfaceView;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -29,6 +30,16 @@ public abstract class BaseRender implements GLSurfaceView.Renderer {
         FloatBuffer vertexBuffer = ByteBuffer.allocateDirect(vertexPoints.length * 4)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer();
+        vertexBuffer.put(vertexPoints);
+        vertexBuffer.position(0);
+
+        return vertexBuffer;
+    }
+
+    protected ShortBuffer toBuffer(short[] vertexPoints) {
+        ShortBuffer vertexBuffer = ByteBuffer.allocateDirect(vertexPoints.length * 4)
+                .order(ByteOrder.nativeOrder())
+                .asShortBuffer();
         vertexBuffer.put(vertexPoints);
         vertexBuffer.position(0);
 

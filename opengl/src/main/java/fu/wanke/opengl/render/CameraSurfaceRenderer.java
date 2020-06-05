@@ -33,7 +33,6 @@ public class CameraSurfaceRenderer extends BaseRender {
 
     private int mProgram;
 
-    private int textureId;
 
     /**
      * 顶点坐标
@@ -109,6 +108,7 @@ public class CameraSurfaceRenderer extends BaseRender {
                     "     vFragColor = texture(yuvTexSampler,yuvTexCoords);\n" +
                     "}";
     private SurfaceTexture mSurfaceTexture;
+    private int textureId;
 
     public CameraSurfaceRenderer(Context context , GLSurfaceView surfaceView) {
         super(context);
@@ -116,24 +116,12 @@ public class CameraSurfaceRenderer extends BaseRender {
         this.mGLSurfaceView = surfaceView;
 
         //分配内存空间,每个浮点型占4字节空间
-        vertexBuffer = ByteBuffer.allocateDirect(POSITION_VERTEX.length * 4)
-                .order(ByteOrder.nativeOrder())
-                .asFloatBuffer();
+        vertexBuffer = toBuffer(POSITION_VERTEX);
         //传入指定的坐标数据
-        vertexBuffer.put(POSITION_VERTEX);
-        vertexBuffer.position(0);
 
-        mTexVertexBuffer = ByteBuffer.allocateDirect(TEX_VERTEX.length * 4)
-                .order(ByteOrder.nativeOrder())
-                .asFloatBuffer()
-                .put(TEX_VERTEX);
-        mTexVertexBuffer.position(0);
+        mTexVertexBuffer = toBuffer(TEX_VERTEX);
 
-        mVertexIndexBuffer = ByteBuffer.allocateDirect(VERTEX_INDEX.length * 2)
-                .order(ByteOrder.nativeOrder())
-                .asShortBuffer()
-                .put(VERTEX_INDEX);
-        mVertexIndexBuffer.position(0);
+        mVertexIndexBuffer = toBuffer(VERTEX_INDEX);
     }
 
 
@@ -146,14 +134,14 @@ public class CameraSurfaceRenderer extends BaseRender {
         //创建一个纹理
         GLES30.glGenTextures(1, tex, 0);
         //绑定到外部纹理上
-        GLES30.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, tex[0]);
-        //设置纹理过滤参数
-        GLES30.glTexParameterf(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_NEAREST);
-        GLES30.glTexParameterf(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR);
-        GLES30.glTexParameterf(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, GLES30.GL_TEXTURE_WRAP_S, GLES30.GL_CLAMP_TO_EDGE);
-        GLES30.glTexParameterf(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, GLES30.GL_TEXTURE_WRAP_T, GLES30.GL_CLAMP_TO_EDGE);
-        //解除纹理绑定
-        GLES30.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, 0);
+//        GLES30.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, tex[0]);
+//        //设置纹理过滤参数
+//        GLES30.glTexParameterf(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_NEAREST);
+//        GLES30.glTexParameterf(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR);
+//        GLES30.glTexParameterf(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, GLES30.GL_TEXTURE_WRAP_S, GLES30.GL_CLAMP_TO_EDGE);
+//        GLES30.glTexParameterf(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, GLES30.GL_TEXTURE_WRAP_T, GLES30.GL_CLAMP_TO_EDGE);
+//        //解除纹理绑定
+//        GLES30.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, 0);
         return tex[0];
     }
 
@@ -169,11 +157,7 @@ public class CameraSurfaceRenderer extends BaseRender {
         //获取Shader中定义的变量在program中的位置
         uTextureSamplerLocation = GLES30.glGetUniformLocation(mProgram, "yuvTexSampler");
 
-
-        //加载纹理
-        textureId = loadTexture();
-        //加载SurfaceTexture
-        loadSurfaceTexture(textureId);
+        loadSurfaceTexture();
     }
 
     @Override
@@ -208,7 +192,19 @@ public class CameraSurfaceRenderer extends BaseRender {
 
     }
 
-    public boolean loadSurfaceTexture(int textureId) {
+
+    /**
+     * 创建一个 纹理，并绑定到离屏buffer
+     * @return
+     */
+    public boolean loadSurfaceTexture() {
+
+        int[] tex = new int[1];
+        //创建一个纹理
+        GLES30.glGenTextures(1, tex, 0);
+
+        textureId = tex[0];
+
         //根据纹理ID创建SurfaceTexture
         Camera1HelperTexture helperTexture = new Camera1HelperTexture(mContext);
 

@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 
 import fu.wanke.opengl.render.BitmapRender;
 import fu.wanke.opengl.render.CameraSurfaceRenderer;
+import fu.wanke.opengl.render.FBORender;
 import fu.wanke.opengl.render.RectangleRenderer;
 import fu.wanke.opengl.render.TestRender;
 import fu.wanke.opengl.render.TriangleRender;
@@ -32,7 +33,8 @@ public class ColorSurfaceView extends GLSurfaceView {
 //        setRenderer(new RectangleRenderer(getContext()));
 //        setRenderer(new BitmapRender(getContext()));
 //        setRenderer(new TestRender(getContext()));
-        setRenderer(new CameraSurfaceRenderer(getContext(),this));
+//        setRenderer(new CameraSurfaceRenderer(getContext(),this));
+        setRenderer(new FBORender(getContext()));
         setRenderMode(RENDERMODE_CONTINUOUSLY);
 
     }

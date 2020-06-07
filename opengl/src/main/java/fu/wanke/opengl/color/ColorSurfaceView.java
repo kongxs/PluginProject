@@ -9,6 +9,7 @@ import fu.wanke.opengl.render.CameraSurfaceRenderer;
 import fu.wanke.opengl.render.FBORender;
 import fu.wanke.opengl.render.RectangleRenderer;
 import fu.wanke.opengl.render.TestRender;
+import fu.wanke.opengl.render.TexureRender;
 import fu.wanke.opengl.render.TriangleRender;
 
 public class ColorSurfaceView extends GLSurfaceView {
@@ -31,10 +32,11 @@ public class ColorSurfaceView extends GLSurfaceView {
 //        setRenderer(new SimpleColorRenderer(getContext()));
 //        setRenderer(new TriangleRender(getContext()));
 //        setRenderer(new RectangleRenderer(getContext()));
-//        setRenderer(new BitmapRender(getContext()));
+        setRenderer(new BitmapRender(getContext()));
 //        setRenderer(new TestRender(getContext()));
 //        setRenderer(new CameraSurfaceRenderer(getContext(),this));
-        setRenderer(new FBORender(getContext()));
+//        setRenderer(new FBORender(getContext()));
+//        setRenderer(new TexureRender(getContext()));
         setRenderMode(RENDERMODE_CONTINUOUSLY);
 
     }

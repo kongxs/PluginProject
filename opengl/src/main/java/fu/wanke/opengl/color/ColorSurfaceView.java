@@ -11,6 +11,10 @@ import fu.wanke.opengl.render.TestRender;
 import fu.wanke.opengl.render.TriangleRender;
 
 public class ColorSurfaceView extends GLSurfaceView {
+
+    private BitmapRender.ImageListener mListener;
+    private BitmapRender renderer;
+
     public ColorSurfaceView(Context context) {
         super(context);
         init();
@@ -30,12 +34,20 @@ public class ColorSurfaceView extends GLSurfaceView {
 //        setRenderer(new SimpleColorRenderer(getContext()));
 //        setRenderer(new TriangleRender(getContext()));
 //        setRenderer(new RectangleRenderer(getContext()));
-//        setRenderer(new BitmapRender(getContext()));
+        renderer = new BitmapRender(getContext());
+        renderer.setListener(mListener);
+        setRenderer(renderer);
 //        setRenderer(new TestRender(getContext()));
-        setRenderer(new CameraSurfaceRenderer(getContext(),this));
+//        setRenderer(new CameraSurfaceRenderer(getContext(),this));
         setRenderMode(RENDERMODE_CONTINUOUSLY);
 
     }
 
+
+    public void  setListener(BitmapRender.ImageListener listener) {
+        this.mListener = listener;
+        if (renderer != null)
+            renderer.setListener(listener);
+    }
 
 }

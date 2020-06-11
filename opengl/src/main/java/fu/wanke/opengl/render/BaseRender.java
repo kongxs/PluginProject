@@ -26,7 +26,7 @@ public abstract class BaseRender implements GLSurfaceView.Renderer {
 
 
 
-    protected FloatBuffer toBuffer(float[] vertexPoints) {
+    public static FloatBuffer toBuffer(float[] vertexPoints) {
         FloatBuffer vertexBuffer = ByteBuffer.allocateDirect(vertexPoints.length * 4)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer();
@@ -36,7 +36,7 @@ public abstract class BaseRender implements GLSurfaceView.Renderer {
         return vertexBuffer;
     }
 
-    protected ShortBuffer toBuffer(short[] vertexPoints) {
+    public static ShortBuffer toBuffer(short[] vertexPoints) {
         ShortBuffer vertexBuffer = ByteBuffer.allocateDirect(vertexPoints.length * 4)
                 .order(ByteOrder.nativeOrder())
                 .asShortBuffer();

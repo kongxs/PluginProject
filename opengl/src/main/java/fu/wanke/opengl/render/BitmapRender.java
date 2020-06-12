@@ -13,11 +13,13 @@ import fu.wanke.opengl.TexureUtils;
 import fu.wanke.opengl.filter.FboFilter;
 import fu.wanke.opengl.filter.Filter;
 import fu.wanke.opengl.filter.GrayFilter;
+import fu.wanke.opengl.filter.WaterFilter;
 
 public class BitmapRender extends BaseRender {
 
     Filter  filter ;
     GrayFilter grayFilter;
+    WaterFilter waterFilter;
 
     private int textureId;
     private ImageListener mListener;
@@ -30,6 +32,7 @@ public class BitmapRender extends BaseRender {
 
         filter = new Filter(context);
         grayFilter = new GrayFilter(context);
+        waterFilter = new WaterFilter(context);
     }
 
     @Override
@@ -51,6 +54,8 @@ public class BitmapRender extends BaseRender {
         textureId = TexureUtils.loadTexture(mContext, R.drawable.mm);
 
         grayImg = ByteBuffer.allocate(width * height * 4);
+
+        waterFilter.prepare(width,height);
     }
 
     @Override
@@ -58,6 +63,8 @@ public class BitmapRender extends BaseRender {
 
 
         textureId = grayFilter.draw(textureId);
+
+        textureId = waterFilter.draw(textureId);
 
         filter.draw(textureId);
 

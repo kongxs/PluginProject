@@ -4,11 +4,11 @@ package fu.wanke.opengl.filter;
 import android.content.Context;
 import android.opengl.GLES30;
 
-public class FboFilter extends Filter {
+public abstract class FboFilter extends Filter {
 
 
-    private int[] mFrameBuffers = new int[1];
-    private int[] mFBOTextures;
+    protected int[] mFrameBuffers = new int[1];
+    protected int[] mFBOTextures;
 
     public FboFilter(Context mContext) {
 

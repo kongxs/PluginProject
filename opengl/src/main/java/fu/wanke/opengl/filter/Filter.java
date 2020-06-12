@@ -99,7 +99,7 @@ public class Filter {
 
     public int draw(int textureId) {
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT);
-
+        GLES30.glViewport(0, 0, mWidth, mHeight);
         //使用程序片段
         GLES30.glUseProgram(mProgram);
         //启用顶点坐标属性

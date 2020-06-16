@@ -32,6 +32,25 @@ public class Filter {
             "     vFragColor = texture(uTextureUnit,vTexCoord);\n" +
             "}";
 
+//    String fragment_shader = "#version 300 es\n" +
+//            "precision mediump float;\n" +
+//            "uniform sampler2D uTextureUnit;\n" +
+//            "//接收刚才顶点着色器传入的纹理坐标(s,t)\n" +
+//            "in vec2 vTexCoord;\n" +
+//            "out vec4 vFragColor;\n" +
+//            "void main() {\n" +
+//            "vec2 uv = vTexCoord.xy;\n" +
+//            "    float y;\n" +
+//            "    // 0.0～0.5 范围内显示0.25～0.75范围的像素\n" +
+//            "    if (uv.y >= 0.0 && uv.y <= 0.5) {\n" +
+//            "        y = uv.y + 0.25;\n" +
+//            "    }else {\n" +
+//            "        // 0.5～1.0范围内显示 0.25～0.75范围的像素\n" +
+//            "        y = uv.y - 0.25;\n" +
+//            "    }"+
+//            "     vFragColor = texture(uTextureUnit,vec2(vTexCoord.x,y));\n" +
+//            "}";
+
     private static final String TAG = "TextureRenderer";
 
     protected FloatBuffer vertexBuffer, mTexVertexBuffer;

@@ -8,6 +8,7 @@ import com.android.build.api.transform.QualifiedContent
 import com.android.build.api.transform.Transform
 import com.android.build.api.transform.TransformException
 import com.android.build.api.transform.TransformInput
+import com.android.build.api.transform.TransformInvocation
 import com.android.build.api.transform.TransformOutputProvider
 import com.android.build.gradle.internal.pipeline.TransformManager
 import com.android.utils.FileUtils
@@ -44,10 +45,18 @@ class CodeTrans extends Transform {
     }
 
     @Override
+    void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
+        super.transform(transformInvocation)
+
+        println "2121-transform 1"
+
+    }
+
+    @Override
     void transform(Context context, Collection<TransformInput> inputs, Collection<TransformInput> referencedInputs, TransformOutputProvider outputProvider, boolean isIncremental) throws IOException, TransformException, InterruptedException {
-
+        println "2121-transform 2"
 //        super.transform(context, inputs, referencedInputs, outputProvider, isIncremental)
-
+        def injectU = new InjectU()
         ExtParams params = project.extParams
 
         println " params.logEnable is ${ params.logEnable }"
@@ -60,20 +69,22 @@ class CodeTrans extends Transform {
 
             input.directoryInputs.each { DirectoryInput directoryInput ->
 
+//                println "2121-transform directoryInput name  is ${directoryInput.file.absolutePath}"
+//                println "2121-transform directoryInput name  is ${directoryInput.file.name}"
 
-                InjectU.inject(directoryInput.file.absolutePath)
+
+                injectU.inject(directoryInput.file.absolutePath)
+
 
                 //获取输出目录
                def dest = outputProvider.getContentLocation(
                        directoryInput.name,directoryInput.contentTypes,directoryInput.scopes,
                        Format.DIRECTORY)
 
-//                println "directory name location is ${directoryInput.name}"
-
-
                 com.android.utils.FileUtils.copyDirectory(
                         directoryInput.file,dest)
             }
+            injectU.generatteMap(project)
 
             input.jarInputs.each { JarInput jarInput ->
 

@@ -47,7 +47,7 @@ class MyPlugin implements Plugin<Project> {
         buildTask.doLast {
             println("build task finished ....... ")
 
-
+            project.add(new JdJarTask())
         }
 
 

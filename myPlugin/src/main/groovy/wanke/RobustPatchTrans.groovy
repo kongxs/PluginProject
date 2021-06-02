@@ -62,8 +62,20 @@ class RobustPatchTrans extends Transform {
         readInjectMethodFromFile()
         generateModifiedInfoMap(inputs)
         generatePatchClasses()
+        zipAllPatchClassesToDex()
 
         throw new NullPointerException(("robust exit successfully"))
+    }
+
+    private void zipAllPatchClassesToDex() {
+        File patchDir = new File(project.getProjectDir().getAbsolutePath() + "/robust/patch");
+        File outDir = new File(project.getProjectDir().getAbsolutePath() + "/robust/out");
+        if (outDir.exists()) {
+            outDir.delete();
+        }
+        outDir.mkdirs();
+        String command = "dx --dex --output ${outDir.absolutePath}/robust_patch.dex ${patchDir.absolutePath}";
+        command.execute();
     }
 
     private void generatePatchClasses(){

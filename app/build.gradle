@@ -140,8 +140,8 @@ dependencies {
 //}
 
 
-apply plugin: 'fun.wanke.plugin'
-apply plugin: 'fun.wanke.robust.patch'
+//apply plugin: 'fun.wanke.plugin'
+//apply plugin: 'fun.wanke.robust.patch'
 //task Hell(type : fun.wanke.plugin.JdJarTask) {
 //
 //}

@@ -40,7 +40,7 @@ public class InjectU {
             sb.append("\n");
         }
 //        System.out.println(project.getBuildDir());
-        File file=new File(project.getBuildDir().getAbsolutePath()+"/robust/methodMap.txt");
+        File file=new File(project.getProjectDir().getAbsolutePath()+"/robust/methodMap.txt");
 //        FileUtils.writeToFile(file,sb.toString());
         Files.createParentDirs(file);
         Files.asCharSink(file, StandardCharsets.UTF_8).write(sb.toString());
@@ -55,6 +55,7 @@ public class InjectU {
         pool.appendClassPath(path);
 
 
+
         File dir = new File(path);
 
         if (dir.isDirectory()) {
@@ -63,6 +64,9 @@ public class InjectU {
                 public void doCall(File file) throws  Exception {
 
                     String filePath = file.getAbsolutePath();
+
+                    System.out.println("inject=" + filePath);
+
 
 //                println "2121-transform directoryInput name  is ${file.absolutePath}"
 //                println "2121-transform directoryInput name  is ${file.name}"

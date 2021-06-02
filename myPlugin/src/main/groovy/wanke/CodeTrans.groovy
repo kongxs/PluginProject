@@ -70,7 +70,7 @@ class CodeTrans extends Transform {
             input.directoryInputs.each { DirectoryInput directoryInput ->
 
 //                println "2121-transform directoryInput name  is ${directoryInput.file.absolutePath}"
-//                println "2121-transform directoryInput name  is ${directoryInput.file.name}"
+                println "2121-transform directoryInput name  is ${directoryInput.file.name}"
 
 
                 injectU.inject(directoryInput.file.absolutePath)

@@ -1,11 +1,14 @@
 package wanke
 
+import com.android.SdkConstants
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
 import com.android.utils.FileUtils
 import fun.wanke.plugin.ExtParams
 import fun.wanke.plugin.InjectU
 import javassist.ClassPool
+import javassist.CtClass
+import javassist.CtMethod
 import org.apache.commons.codec.digest.DigestUtils
 import org.gradle.api.Project
 
@@ -15,9 +18,13 @@ class RobustPatchTrans extends Transform {
 
     ClassPool pool = ClassPool.default
     private java.util.Map<java.lang.String, java.lang.Integer> injectMethodMap
+    Map<String, Set<String>> modifiedMap = new HashMap<>()
+    Class modifyAnnotationClass
+    private RobustPatchU robustPatchU
 
     RobustPatchTrans(Project project) {
         this.project = project
+        robustPatchU = new RobustPatchU(project , pool)
     }
 
     @Override
@@ -54,20 +61,52 @@ class RobustPatchTrans extends Transform {
 
         readInjectMethodFromFile()
         generateModifiedInfoMap(inputs)
+        generatePatchClasses()
 
         throw new NullPointerException(("robust exit successfully"))
     }
 
+    private void generatePatchClasses(){
+        File pathDir = new File(project.getProjectDir().getAbsolutePath() + "/robust/patch");
+        if (pathDir.exists()) {
+            pathDir.delete()
+        }
+        pathDir.mkdirs()
+
+//        [com.example.pluginproject.People:[com.example.pluginproject.People.getAge(int)]]
+        modifiedMap.entrySet().each {
+            // key : com.example.pluginproject.People
+            def originClazz = pool.get(it.key)
+
+//            value : [com.example.pluginproject.People.getAge(int)]
+            Set<String> methodLongNames = it.value
+
+            //生成path
+            CtClass patchClazz = robustPatchU.createPatchClass(originClazz, methodLongNames)
+            patchClazz.writeFile(pathDir.getAbsolutePath())
+            patchClazz.defrost()
+
+
+
+
+
+
+
+        }
+
+
+    }
+
     private void generateModifiedInfoMap(Collection<TransformInput> inputs){
-
+        Map<String, Set<String>> modifiedMap = new HashMap<>()
         inputs.each {
-                it.directoryInputs.each {
-                    pool.insertClassPath(it.file.absolutePath)
+                it.directoryInputs.each { DirectoryInput input ->
+                    pool.insertClassPath(input.file.absolutePath)
 
 
-                    it.file.eachFileRecurse {
+                    input.file.eachFileRecurse {
 
-                        handFile(it)
+                        handFile(it , input.file.absolutePath,modifiedMap)
                     }
 
                 }
@@ -77,29 +116,51 @@ class RobustPatchTrans extends Transform {
             }
         }
 
-//        inputs.each {
-//            DirectoryInput input ->
-//                pool.insertClassPath(input.file.absolutePath)
-//
-//                println("RobustPatchTrans = " + input.file.name)
-//        }
+        this.modifiedMap = modifiedMap
 
-
+        println("modifiedMap= " + this.modifiedMap)
     }
 
-    private void handFile(File file){
-        Map<String, Set<String>> modifiedMap = new HashMap<>()
+    private void handFile(File file ,String dir , Map<String, Set<String>> modifiedMap){
 
-        println("RobustPatchTrans=" + file.absolutePath)
+//        println("RobustPatchTrans=handFile = " + file.absolutePath)
+
+        if (!file.absolutePath.endsWith(SdkConstants.DOT_CLASS)) {
+            return;
+        }
+
+        def className = file.absolutePath.replace(dir, "")
+                .replace(File.separator, ".")
+                .replace(SdkConstants.DOT_CLASS, "")
+                .substring(1)
 
 
+        CtClass ctClass = pool.get(className)
+
+        if (modifyAnnotationClass == null) {
+            modifyAnnotationClass = pool.get("com.example.pluginproject.Modify").toClass()
+        }
+
+        Set<String> modifiedMethodNames = new HashSet<>()
+
+        ctClass.getDeclaredMethods().each {
+            CtMethod method ->
+                if (method.hasAnnotation(modifyAnnotationClass)) {
+                    modifiedMethodNames.add(method.longName)
+                    println("modifiedMap= methodLongName " + method.longName)
+                }
+        }
+
+        if (modifiedMethodNames.size() > 0) {
+            modifiedMap.put(ctClass.name, modifiedMethodNames)
+        }
 
     }
 
     private Map<String, Integer> readInjectMethodFromFile() {
         Map<String, String> methodMap = new HashMap<>();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(project.getBuildDir().getAbsolutePath() + "/robust/methodMap.txt"))
+            BufferedReader br = new BufferedReader(new FileReader(project.getProjectDir().getAbsolutePath() + "/robust/methodMap.txt"))
             String line = "";
             while ((line = br.readLine()) != null && line.length() > 0) {
                 String[] ss = line.split(":");

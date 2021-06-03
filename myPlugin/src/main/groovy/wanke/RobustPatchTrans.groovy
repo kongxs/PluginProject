@@ -9,8 +9,11 @@ import fun.wanke.plugin.InjectU
 import javassist.ClassPool
 import javassist.CtClass
 import javassist.CtMethod
+import javassist.Loader
 import org.apache.commons.codec.digest.DigestUtils
 import org.gradle.api.Project
+
+import java.security.ProtectionDomain
 
 class RobustPatchTrans extends Transform {
 
@@ -20,6 +23,7 @@ class RobustPatchTrans extends Transform {
     private java.util.Map<java.lang.String, java.lang.Integer> injectMethodMap
     Map<String, Set<String>> modifiedMap = new HashMap<>()
     Class modifyAnnotationClass
+
     private RobustPatchU robustPatchU
 
     RobustPatchTrans(Project project) {
@@ -58,6 +62,8 @@ class RobustPatchTrans extends Transform {
                    TransformOutputProvider outputProvider, boolean isIncremental) throws IOException, TransformException, InterruptedException {
 
         super.transform(context ,inputs,referencedInputs ,outputProvider ,isIncremental)
+
+        println("robustPatchTrans-transform")
 
         readInjectMethodFromFile()
         generateModifiedInfoMap(inputs)
@@ -100,10 +106,6 @@ class RobustPatchTrans extends Transform {
 
 
 
-
-
-
-
         }
 
 
@@ -112,16 +114,22 @@ class RobustPatchTrans extends Transform {
     private void generateModifiedInfoMap(Collection<TransformInput> inputs){
         Map<String, Set<String>> modifiedMap = new HashMap<>()
         inputs.each {
-                it.directoryInputs.each { DirectoryInput input ->
-                    pool.insertClassPath(input.file.absolutePath)
+//                it.directoryInputs.each { DirectoryInput input ->
+//                    pool.insertClassPath(input.file.absolutePath)
+//
+//
+//                    input.file.eachFileRecurse {
+//
+//                        handFile(it , input.file.absolutePath,modifiedMap)
+//                    }
+//
+//                }
 
-
-                    input.file.eachFileRecurse {
-
-                        handFile(it , input.file.absolutePath,modifiedMap)
-                    }
-
-                }
+            it.directoryInputs.each { directoryInput ->
+                pool.insertClassPath(directoryInput.file.absolutePath)
+                org.apache.commons.io.FileUtils.listFiles(directoryInput.file, null, true)
+                        .each { file -> handFile(file, directoryInput.file.absolutePath, modifiedMap) }
+            }
 
             it.jarInputs.each {
                 pool.insertClassPath(it.file.absolutePath)
@@ -148,9 +156,15 @@ class RobustPatchTrans extends Transform {
 
 
         CtClass ctClass = pool.get(className)
+        if (ctClass.isFrozen()){
+            ctClass.defrost()
+        }
+
+
 
         if (modifyAnnotationClass == null) {
-            modifyAnnotationClass = pool.get("com.example.pluginproject.Modify").toClass()
+            modifyAnnotationClass = pool.get("com.example.pluginproject.Modify")
+                    .toClass(new Loader())
         }
 
         Set<String> modifiedMethodNames = new HashSet<>()

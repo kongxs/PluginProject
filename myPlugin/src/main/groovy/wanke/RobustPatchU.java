@@ -2,12 +2,15 @@ package wanke;
 
 import org.gradle.api.Project;
 
+import java.util.Map;
 import java.util.Set;
 
+import javassist.ClassMap;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtConstructor;
 import javassist.CtField;
+import javassist.CtMethod;
 import javassist.CtNewConstructor;
 import javassist.bytecode.AccessFlag;
 import javassist.bytecode.ClassFile;
@@ -57,9 +60,26 @@ public class RobustPatchU {
             patchClazz.addField(new CtField(field, patchClazz));
         }
 
+        ClassMap classMap = new ClassMap();
+        classMap.put(patchClassName, originClass.getName());
+        classMap.fix(originClass);
+        for (CtMethod method : originClass.getDeclaredMethods()) {
+            if (methodLongNames.contains(method.getLongName())) {
+                CtMethod newCtMethod = new CtMethod(method, patchClazz, classMap);
+                patchClazz.addMethod(newCtMethod);
+            }
+        }
 
 
         return patchClazz;
+    }
+
+    public CtClass createPatchControlClass(CtClass patchClass,
+                                           CtClass originClass, Set<String> methodLongNames,
+                                           Map<String, Integer> injectMethodMap) throws Exception{
+
+        return null;
+
     }
 
 

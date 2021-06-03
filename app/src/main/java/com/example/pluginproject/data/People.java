@@ -1,4 +1,4 @@
-package com.example.pluginproject;
+package com.example.pluginproject.data;
 
 import com.example.pluginproject.Modify;
 

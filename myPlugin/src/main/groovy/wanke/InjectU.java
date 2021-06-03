@@ -77,7 +77,7 @@ public class InjectU {
 
 //                    println "file path is ${filePath}"
 
-                        int index = filePath.indexOf("com/example/pluginproject/People");
+                        int index = filePath.indexOf("com/example/pluginproject/data/People");
 
                         if (index != -1) {
 
@@ -85,6 +85,10 @@ public class InjectU {
                             int end = filePath.length() - 6;// .class = 6
 
                             final String className = filePath.substring(index, end).replace("\\", ".").replace("/", ".");
+
+
+//                            if (className.startsWith(""))
+
 
                             DefaultGroovyMethods.println(InjectU.this, "not -1 class name is " + className);
 //
@@ -94,9 +98,17 @@ public class InjectU {
 
                             }
 
+
 //
                             if (c.isFrozen()) {
                                 c.defrost();
+                            }
+
+                            try {
+                                if (c.getDeclaredField("changeQuickRedirect") != null) {
+                                    return;
+                                }
+                            } catch (Exception e){
                             }
 
 

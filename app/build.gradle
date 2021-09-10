@@ -1,5 +1,8 @@
+import com.android.build.gradle.AppExtension
+import com.android.build.gradle.internal.dsl.DefaultConfig
+
 apply plugin: 'com.android.application'
-//apply plugin: 'fun.wanke.plugin'
+//apply plugin: 'groovy'
 
 
 repositories {
@@ -25,6 +28,14 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        jd {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -61,8 +72,6 @@ dependencies {
 
 
     implementation 'com.eclipsesource.j2v8:j2v8:6.1.0'
-
-
 
 //    compile localGroovy()
 //    implementation 'com.android.tools.build:transform-api:1.5.0'
@@ -163,5 +172,39 @@ this.afterEvaluate{
 //gradle执行结束
 this.gradle.buildFinished{
     print"gradle 执行结束 "
+
+
+    /**
+     * android {*
+     * }
+     */
+    def android = project.getExtensions().getByType(AppExtension)
+
+    def version = android.buildToolsVersion
+    def version1 = android.compileSdkVersion
+    def version2 = android.ndkVersion
+    println("buildV:$version , compileV: $version1 , ndkV: $version2")
+
+    /**
+     * defaultConfig {
+     *
+     * }
+     */
+    DefaultConfig config = android.defaultConfig
+    def id = config.applicationId
+    def version3 = config.minSdkVersion
+    def placeholders = config.manifestPlaceholders
+
+
+    android.signingConfigs.each {
+        println("signConfigs: $it.name")
+    }
+
+    android.buildTypes.each{  value->
+        println("buildType : ${value.name}")
+        if (value.name.equals("debug")) {
+        }
+    }
+
 }
 

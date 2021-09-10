@@ -65,6 +65,7 @@ class CodeTrans extends Transform {
 //        System.out.println("=======================================doPathTransform{ context=${context}, inputs=${inputs}, referencedInputs=${referencedInputs}, outputProvider=${outputProvider}, isIncremental=${isIncremental}")
 
 
+        def find = inputs.find()
         inputs.each { TransformInput input ->
 
             input.directoryInputs.each { DirectoryInput directoryInput ->

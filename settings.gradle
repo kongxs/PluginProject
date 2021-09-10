@@ -1,4 +1,19 @@
+import org.gradle.initialization.DefaultSettings
+
 include ':app', ':myPlugin', ':skin_app', ':skin', ':mvp', ':link', ':lib'
 //include ':library'
 //include ':buildSrc'
 include ':opengl'
+
+def TAG  = "settings"
+
+gradle.buildStarted {
+    println("$TAG , buildStart ... ")
+}
+
+gradle.buildFinished {
+    println("$TAG , buildFinish ... ")
+}
+
+def path = this.rootDir.absolutePath
+println("$TAG , path : $path")

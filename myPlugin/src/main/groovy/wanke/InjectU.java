@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import groovy.lang.Closure;
+import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtConstructor;
@@ -27,6 +28,11 @@ import javassist.bytecode.AccessFlag;
 import javassist.bytecode.CodeAttribute;
 import javassist.bytecode.LocalVariableAttribute;
 import javassist.bytecode.MethodInfo;
+import javassist.expr.ConstructorCall;
+import javassist.expr.ExprEditor;
+import javassist.expr.MethodCall;
+import wanke.GMeExprEditor;
+import wanke.GetIdentifierExprEditor;
 
 public class InjectU {
 
@@ -100,50 +106,57 @@ public class InjectU {
 
 
 //
-                            if (c.isFrozen()) {
-                                c.defrost();
-                            }
-
-                            try {
-                                if (c.getDeclaredField("changeQuickRedirect") != null) {
-                                    return;
-                                }
-                            } catch (Exception e){
-                            }
+//                            if (c.isFrozen()) {
+//                                c.defrost();
+//                            }
+//
+//                            try {
+//                                if (c.getDeclaredField("changeQuickRedirect") != null) {
+//                                    return;
+//                                }
+//                            } catch (Exception e){
+//                            }
 
 
                             //添加一个静态成员变量
-                            CtClass type = getPool().getOrNull("com.example.pluginproject.ChangeQuickRedirect");
-                            CtField field = new CtField(type, "changeQuickRedirect", c);
-                            field.setModifiers(AccessFlag.PUBLIC | AccessFlag.STATIC);
-                            c.addField(field);
+//                            CtClass type = getPool().getOrNull("com.example.pluginproject.ChangeQuickRedirect");
+//                            CtField field = new CtField(type, "changeQuickRedirect", c);
+//                            field.setModifiers(AccessFlag.PUBLIC | AccessFlag.STATIC);
+//                            c.addField(field);
 
 
                             CtMethod[] methods = c.getDeclaredMethods();
 
-                            for (CtMethod method : methods) {
+                            DefaultGroovyMethods.println(InjectU.this, "not -1 class name is methods : " + methods.length);
 
-                                getMethodMap().put(method.getLongName(), getInsertMethodCount().incrementAndGet());
+                            for (int i = 0; i < methods.length; i++) {
 
-                                Boolean isStatic = (method.getModifiers() & AccessFlag.STATIC) != 0;
-                                CtClass returnType = method.getReturnType();
-                                String returnTypeNameString = returnType.getName();
-
-
-                                String body = "Object argThis = null;";
-                                if (!isStatic) {
-                                    body += "argThis = $0;";
-                                }
-                                System.out.println(method.getLongName());
-
-                                int methodNumber = methodMap.get(method.getLongName());
-
-                                body += "   if (changeQuickRedirect!=null && changeQuickRedirect.isSupport($args, argThis, " + isStatic + ", " + methodNumber + ")) {";
-                                body += getReturnStatement(returnTypeNameString, isStatic, methodNumber);
-                                body += "   }";
-                                method.insertBefore(body);
-
+                                methods[i].instrument(new GMeExprEditor());
                             }
+
+//                            for (CtMethod method : methods) {
+//
+//                                getMethodMap().put(method.getLongName(), getInsertMethodCount().incrementAndGet());
+//
+//                                Boolean isStatic = (method.getModifiers() & AccessFlag.STATIC) != 0;
+//                                CtClass returnType = method.getReturnType();
+//                                String returnTypeNameString = returnType.getName();
+//
+//
+//                                String body = "Object argThis = null;";
+//                                if (!isStatic) {
+//                                    body += "argThis = $0;";
+//                                }
+//                                System.out.println(method.getLongName());
+//
+//                                int methodNumber = methodMap.get(method.getLongName());
+//
+//                                body += "   if (changeQuickRedirect!=null && changeQuickRedirect.isSupport($args, argThis, " + isStatic + ", " + methodNumber + ")) {";
+//                                body += getReturnStatement(returnTypeNameString, isStatic, methodNumber);
+//                                body += "   }";
+//                                method.insertBefore(body);
+//
+//                            }
 
 
                             CtConstructor[] declaredConstructors = c.getDeclaredConstructors();

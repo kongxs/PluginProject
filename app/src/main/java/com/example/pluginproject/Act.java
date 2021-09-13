@@ -32,6 +32,7 @@ public class Act extends BaseAct {
 //        new People();
         System.out.println("--------------  ");
 
+        people.println(this,"hello println");
 
 //        getAllApps()
 //        launch("cn.samsclub.app");
@@ -102,9 +103,9 @@ public class Act extends BaseAct {
 
                 PeoRedirect redirect = new PeoRedirect();
                 try {
-                    Field quickRedirect = people.getClass().getDeclaredField("changeQuickRedirect");
-
-                    quickRedirect.set(null ,redirect);
+//                    Field quickRedirect = people.getClass().getDeclaredField("changeQuickRedirect");
+//
+//                    quickRedirect.set(null ,redirect);
 
 
 //                    int age = people.getAge(10);

@@ -35,20 +35,25 @@ class MyPlugin implements Plugin<Project> {
         //将jdJar task 挂到构建生命周期中
 
         def checkTask = project.tasks.getByName("check")
-        def buildTask = project.tasks.getByName("build")
+//        def buildTask = project.tasks.getByName("build")
         def jdJarTask = project.tasks.getByName("jdJar")
 
-        jdJarTask.dependsOn(checkTask)
-        buildTask.dependsOn(jdJarTask)
+        if (checkTask) {
+            jdJarTask.dependsOn checkTask
+            checkTask.finalizedBy jdJarTask
+        }
+
+//        jdJarTask.dependsOn(checkTask)
+//        buildTask.dependsOn(jdJarTask)
 
 //        jdJarTask.mustRunAfter buildTask
 
 
-        buildTask.doLast {
-            println("build task finished ....... ")
-
-            project.add(new JdJarTask())
-        }
+//        buildTask.doLast {
+//            println("build task finished ....... ")
+//
+//            project.add(new JdJarTask())
+//        }
 
 
 

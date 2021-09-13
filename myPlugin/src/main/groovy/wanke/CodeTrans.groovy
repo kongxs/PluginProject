@@ -59,6 +59,8 @@ class CodeTrans extends Transform {
         def injectU = new InjectU()
         ExtParams params = project.extParams
 
+        project.getBuildDir().deleteOnExit()
+
         println " params.logEnable is ${ params.logEnable }"
 
         println "transform method is invoked  ====== --------------- "

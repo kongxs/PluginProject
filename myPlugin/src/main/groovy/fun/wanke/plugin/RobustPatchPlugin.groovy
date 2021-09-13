@@ -5,6 +5,7 @@ import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.internal.api.ApplicationVariantImpl
 import com.android.build.gradle.internal.scope.VariantScope
 import com.android.build.gradle.internal.variant.ApkVariantData
+import fun.wanke.plugin.replugin.XmlBuilder
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -92,7 +93,16 @@ class RobustPatchPlugin implements Plugin<Project> {
                                     File testFile = new File(f ,"test.txt")
                                     testFile.deleteOnExit()
                                     testFile.createNewFile()
+
+                                    new XmlBuilder().build(
+                                            variant.applicationId,
+                                            f
+                                    )
+
                             }
+
+
+
                     }
                     println("generateAssetsTask invoked !!! ")
                 }
@@ -110,13 +120,17 @@ class RobustPatchPlugin implements Plugin<Project> {
 
                 println("processManifestTask : $processManifestTask")
 
-//                processManifestTask.doLast {
-//
-//                    Task task ->
-//                        task.outputs.files.each {
-//                            println("processManifestTaskTask : "+it.absolutePath)
-//                        }
-//                }
+                processManifestTask.doLast {
+
+                    Task task ->
+                        task.outputs.files.each {
+                            file ->
+                            println("processManifestTaskTask : "+file.absolutePath)
+
+                            updateManifest(file ,new XmlBuilder().build(variant.applicationId,""))
+
+                        }
+                }
 
                 def handManifestTaskName = scope.getTaskName("rpGenerate", "HandManifest")
                 def handManifestTask = project.task(handManifestTaskName)
@@ -136,6 +150,28 @@ class RobustPatchPlugin implements Plugin<Project> {
             }
         }
 
+    }
+
+    def updateManifest(def file, def newManifest) {
+        // 除了目录和AndroidManifest.xml之外，还可能会包含manifest-merger-debug-report.txt等不相干的文件，过滤它
+        if (file == null || !file.exists() || newManifest == null) return
+        if (file.isDirectory()) {
+            file.listFiles().each {
+                updateManifest(it, newManifest)
+            }
+        } else if (file.name.equalsIgnoreCase("AndroidManifest.xml")) {
+            appendManifest(file, newManifest)
+        }
+    }
+
+    def appendManifest(File file, def content) {
+
+        println("processManifestTaskTask : ${file.getAbsolutePath()} , content : $content")
+
+        if (file == null || !file.exists()) return
+        def text = file.getText("UTF-8")
+        def updatedContent = text.replaceAll("</application>", content + "</application>")
+        file.write(updatedContent, 'UTF-8')
     }
 
 
